@@ -1,31 +1,43 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 2.8.3)
+project(youbot_battery_monitor)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
+find_package(catkin REQUIRED
+  COMPONENTS
+    diagnostic_msgs
+    pr2_msgs
+    roscpp
+)
 
-rosbuild_init()
+catkin_package(
+  CATKIN_DEPENDS 
+    diagnostic_msgs
+    pr2_msgs
+)
 
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+include_directories(
+  ros/include/youbot_battery_monitor
+)
 
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
+add_executable(youbot_battery_monitor
+  ros/src/youbot_battery_monitor_node.cpp
+  ros/src/youbot_battery_monitor.cpp 
+)
+add_dependencies(youbot_battery_monitor ${catkin_EXPORTED_TARGETS})
+target_link_libraries(youbot_battery_monitor 
+  ${catkin_LIBRARIES}
+  stdc++
+)
 
-#common commands for building c++ executables and libraries
-#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
-#target_link_libraries(${PROJECT_NAME} another_library)
-#rosbuild_add_boost_directories()
-#rosbuild_link_boost(${PROJECT_NAME} thread)
+install(TARGETS youbot_battery_monitor
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+install(DIRECTORY ros/include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+)
 
-rosbuild_add_executable(youbot_battery_monitor src/youbot_battery_monitor.cpp nodes/youbot_battery_monitor_node.cpp )
-target_link_libraries(youbot_battery_monitor stdc++)
+install(FILES youbot_battery_monitor.sh
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)

@@ -25,6 +25,6 @@ In order to ease the use of the program with recommend to add a new udev rule fi
 
 SUBSYSTEM=="tty", BUS=="usb", SYSFS{idVendor}=="16d0", SYSFS{idProduct}=="059d", SYMLINK+="youbot/lcd_display", RUN+="/etc/youbot/youbot_battery_monitor.sh"
 
-In the example above, it mounts the serial interface of the charging unit to "/dev/youbot/lcd_display". If the device is mounted successfully it executes the script "/etc/youbot/youbot_battery_monitor.sh" (which you can find in this package under scripts), which starts the youbot battery monitor. 
+In the example above, it mounts the serial interface of the charging unit to "/dev/youbot/lcd_display". If the device is mounted successfully it executes the script "/etc/youbot/youbot_battery_monitor.sh" (which you can find in the root of this package), which starts the youbot battery monitor. 
 
 If a ROS master is started at any time, the monitor also publishes the voltage information as diagnostics and dashboard messages. 
