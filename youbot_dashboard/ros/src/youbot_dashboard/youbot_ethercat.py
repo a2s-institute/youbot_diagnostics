@@ -1,6 +1,6 @@
 # Software License Agreement (BSD License)
 #
-# Copyright (c) 2008, Willow Garage, Inc.
+# Copyright (c) 2012, Willow Garage, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -13,7 +13,7 @@
 #    copyright notice, this list of conditions and the following
 #    disclaimer in the documentation and/or other materials provided
 #    with the distribution.
-#  * Neither the name of the Willow Garage nor the names of its
+#  * Neither the name of Willow Garage, Inc. nor the names of its
 #    contributors may be used to endorse or promote products derived
 #    from this software without specific prior written permission.
 #
@@ -29,27 +29,38 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
+from python_qt_binding.QtCore import QSize
 
-import roslib
-roslib.load_manifest('youbot_dashboard')
+from rqt_robot_dashboard.widgets import IconToolButton
 
-import wx
-# TODO: remove once 0.7.1 is released
-try:
-    import rxtools.cppwidgets as rxtools
-except ImportError:
-    pass
-    
-class RosoutFrame(wx.Frame):
-  def __init__(self, parent, id, title):
-    wx.Frame.__init__(self, parent, id, title, wx.DefaultPosition, wx.Size(800, 600))
-    
-    self.Bind(wx.EVT_CLOSE, self.on_close)
-    
-    self._rosout_panel = rxtools.RosoutPanel(self)
-    
-  def get_panel(self):
-    return self._rosout_panel
-    
-  def on_close(self, evt):
-    self.Hide()
+
+class YoubotEthercat(IconToolButton):
+    """
+    Dashboard widget to display youbot EtherCAT state.
+    """
+    def __init__(self, context, reconnect_callback):
+        """
+        :param context: the plugin context
+        :type context: qt_gui.plugin.Plugin
+        """
+        connected_icon = ['bg-green.svg', 'ic-runstop-off.svg']
+        disconnected_icon = ['bg-red.svg', 'ic-runstop-on.svg']
+        stale_icon = ['bg-grey.svg',  'ic-runstop-off.svg', 'ol-stale-badge.svg']
+
+        icons = [connected_icon, disconnected_icon, stale_icon]
+        super(YoubotEthercat, self).__init__('EtherCAT', icons, icons)
+        self.setToolTip('EtherCAT')
+        self.set_stale()
+
+        self.add_action('Reconnect', reconnect_callback)
+
+        self.setFixedSize(self._icons[0].actualSize(QSize(50, 30)))
+
+    def set_connected(self):
+        self.update_state(0)
+
+    def set_disconnected(self):
+        self.update_state(1)
+
+    def set_stale(self):
+        self.update_state(2)
