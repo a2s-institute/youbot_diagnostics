@@ -10,14 +10,14 @@ install(FILES plugin.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
-install(PROGRAMS ros/scripts/youbot_dashboard
+install(PROGRAMS scripts/youbot_dashboard
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(DIRECTORY ros/launch/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/ros/launch
+install(DIRECTORY launch/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
 
-install(DIRECTORY common/images/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/common/images
+install(DIRECTORY images/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/images
 )

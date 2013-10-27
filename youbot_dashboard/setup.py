@@ -5,7 +5,7 @@ from catkin_pkg.python_setup import generate_distutils_setup
 
 d = generate_distutils_setup(
     packages=['youbot_dashboard'],
-    package_dir={'': 'ros/src'}
+    package_dir={'': 'src'}
 )
 
 setup(**d)

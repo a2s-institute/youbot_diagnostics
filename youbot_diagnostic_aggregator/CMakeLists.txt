@@ -7,9 +7,9 @@ catkin_package(
     diagnostic_aggregator
 )
 
-install(DIRECTORY ros/launch/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/ros/launch
+install(DIRECTORY launch/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
-install(DIRECTORY ros/config/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/ros/config
+install(DIRECTORY config/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
 )

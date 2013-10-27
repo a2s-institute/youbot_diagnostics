@@ -15,12 +15,12 @@ catkin_package(
 )
 
 include_directories(
-  ros/include/youbot_battery_monitor
+  include/youbot_battery_monitor
 )
 
 add_executable(youbot_battery_monitor
-  ros/src/youbot_battery_monitor_node.cpp
-  ros/src/youbot_battery_monitor.cpp 
+  src/youbot_battery_monitor_node.cpp
+  src/youbot_battery_monitor.cpp 
 )
 add_dependencies(youbot_battery_monitor ${catkin_EXPORTED_TARGETS})
 target_link_libraries(youbot_battery_monitor 
@@ -33,7 +33,7 @@ install(TARGETS youbot_battery_monitor
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
-install(DIRECTORY ros/include/${PROJECT_NAME}/
+install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
   FILES_MATCHING PATTERN "*.h"
 )
