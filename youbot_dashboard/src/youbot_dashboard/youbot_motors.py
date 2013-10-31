@@ -57,8 +57,8 @@ class YoubotMotors(MenuDashWidget):
         super(YoubotMotors, self).__init__(component_name + ' motors', icons)
         self.update_state(3)
 
-        self.add_action('Switch On', switch_on_callback)
-        self.add_action('Switch Off', switch_off_callback)
+        self.add_action('Switch ' + component_name + ' motors ON', switch_on_callback)
+        self.add_action('Switch ' + component_name + ' motors OFF', switch_off_callback)
         self.setToolTip(component_name + ' motors')
 
         self.setFixedSize(self._icons[0].actualSize(QSize(50, 30)))
