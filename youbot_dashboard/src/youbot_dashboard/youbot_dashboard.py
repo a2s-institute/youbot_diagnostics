@@ -135,20 +135,29 @@ class YoubotDashboard(Dashboard):
             except rospy.ServiceException, e:
                 QMessageBox.critical(self.ethercat, "Error", "Failed to reconnect the driver: service call failed with error: %s"%(e))
 
-    def on_motors_clicked(self, button_handle, component_name, mode_name):
+    def on_motors_clicked(self, button_handle, component_name, data_index, mode_name):
         if (self._dashboard_message is not None and self._dashboard_message.power_board_state_valid):
-            if (self._dashboard_message.power_board_state.circuit_state[0] == PowerBoardState.STATE_STANDBY):
-                switch_on_motors = rospy.ServiceProxy("/" + component_name + "/switch" + mode_name + "Motors", std_srvs.srv.Empty)
+
+            # if mode == "Off"
+            ok_state = PowerBoardState.STATE_ENABLED
+            switch_state = PowerBoardState.STATE_STANDBY
+            
+            if (mode_name == "On"):
+              ok_state = PowerBoardState.STATE_STANDBY
+              switch_state = PowerBoardState.STATE_ENABLED
+
+            if (self._dashboard_message.power_board_state.circuit_state[data_index] == ok_state):
+                switch_motor_state = rospy.ServiceProxy("/" + component_name + "/switch" + mode_name + "Motors", std_srvs.srv.Empty)
        
                 try:
-                    switch_on_motors()
+                    switch_motor_state()
                 except rospy.ServiceException, e:
-                    QMessageBox.critical(self.button_handle, "Error", "Failed to switch " + mode_name + " " + component_name + " motors: service call failed with error: %s" % (e))
+                    QMessageBox.critical(button_handle, "Error", "Failed to switch " + mode_name + " " + component_name + " motors: service call failed with error: %s" % (e))
           
-            elif (self._dashboard_message.power_board_state.circuit_state[0] == PowerBoardState.STATE_ENABLED):
-               QMessageBox.critical(self.button_handle, "Error", component_name + " motors are already switched " + mode_name)
-            elif (self._dashboard_message.power_board_state.circuit_state[0] == PowerBoardState.STATE_DISABLED):
-                QMessageBox.critical(self.button_handle, "Error", component_name + " is not connected")
+            elif (self._dashboard_message.power_board_state.circuit_state[data_index] == switch_state):
+               QMessageBox.critical(button_handle, "Error", component_name + " motors are already switched " + mode_name)
+            elif (self._dashboard_message.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_DISABLED):
+                QMessageBox.critical(button_handle, "Error", component_name + " is not connected")
 
     def on_base_motors_on_clicked(self):
         self.on_motors_clicked(self._base_motors, "base", 0, "On")
