@@ -82,17 +82,17 @@ class YoubotDashboard(Dashboard):
 
     def check_motor_state(self, button_handle, component_name, msg, data_index):
         if (msg.power_board_state_valid and msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_ENABLED):
-            self.button_handle.set_ok()
-            self.button_handle.setToolTip(self.tr(component_name + " Motors: Switched ON"))
+            button_handle.set_ok()
+            button_handle.setToolTip(self.tr(component_name + " Motors: Switched ON"))
         elif (msg.power_board_state_valid and msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_STANDBY):
-            self.button_handle.set_warn()
-            self.button_handle.setToolTip(self.tr(component_name + " Motors: Switched OFF"))
+            button_handle.set_warn()
+            button_handle.setToolTip(self.tr(component_name + " Motors: Switched OFF"))
         elif (msg.power_board_state_valid and msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_DISABLED):
-            self.button_handle.set_error()
-            self.button_handle.setToolTip(self.tr(component_name + " Motors: not connected"))
+            button_handle.set_error()
+            button_handle.setToolTip(self.tr(component_name + " Motors: not connected"))
         else:
-            self.button_handle.set_stale()
-            self.button_handle.setToolTip(self.tr(component_name + " Motors: stale"))
+            button_handle.set_stale()
+            button_handle.setToolTip(self.tr(component_name + " Motors: stale"))
 
     def dashboard_callback(self, msg):
         """
@@ -151,16 +151,16 @@ class YoubotDashboard(Dashboard):
                 QMessageBox.critical(self.button_handle, "Error", component_name + " is not connected")
 
     def on_base_motors_on_clicked(self):
-        self.on_motors_clicked(self._base_motors, "base", "On")
+        self.on_motors_clicked(self._base_motors, "base", 0, "On")
     
     def on_base_motors_off_clicked(self):
-        self.on_motors_clicked(self._base_motors, "base", "Off")
+        self.on_motors_clicked(self._base_motors, "base", 0, "Off")
     
     def on_arm_motors_on_clicked(self):
-        self.on_motors_clicked(self._arm_motors, "arm", "On")
+        self.on_motors_clicked(self._arm_motors, "arm", 1, "On")
 
     def on_arm_motors_off_clicked(self):
-        self.on_motors_clicked(self._arm_motors, "arm", "Off")
+        self.on_motors_clicked(self._arm_motors, "arm", 1, "Off")
 
     def shutdown_dashboard(self):
         self._dashboard_agg_sub.unregister()
