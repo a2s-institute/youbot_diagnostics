@@ -39,14 +39,6 @@ class YoubotMotors(MenuDashWidget):
     Dashboard widget to display motor state and allow interaction.
     """
     def __init__(self, component_name, switch_on_callback, switch_off_callback):
-        """
-        :param context: the plugin context
-        :type context: qt_gui.plugin.Plugin
-        :param reset_callback: calback for the "reset" action
-        :type reset_callback: function
-        :param halt_callback: calback for the "reset" action
-        :type halt_callback: function
-        """
 
         ok_icon = ['bg-green.svg', 'ic-' + component_name + '.svg']
         warn_icon = ['bg-yellow.svg', 'ic-' + component_name + '.svg', 'ol-warn-badge.svg']
