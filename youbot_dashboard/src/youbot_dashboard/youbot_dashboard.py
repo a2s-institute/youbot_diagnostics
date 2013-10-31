@@ -44,7 +44,7 @@ from rqt_robot_dashboard.console_dash_widget import ConsoleDashWidget
 from python_qt_binding.QtCore import QSize
 from python_qt_binding.QtGui import QMessageBox
 
-from .pr2_battery import PR2Battery
+from rqt_pr2_dashboard.pr2_battery import PR2Battery
 from .youbot_motors import YoubotMotors
 from .youbot_ethercat import YoubotEthercat
 
