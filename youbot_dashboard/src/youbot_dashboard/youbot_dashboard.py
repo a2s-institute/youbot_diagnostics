@@ -69,8 +69,8 @@ class YoubotDashboard(Dashboard):
 
         self._console = ConsoleDashWidget(self.context, minimal=False)
         self._monitor = MonitorDashWidget(self.context)
-        self._base_motors = YoubotBaseMotors(self.on_base_motors_on_clicked, on_base_motors_off_clicked)        
-        self._arm_motors = YoubotArmMotors(self.on_arm_motors_on_clicked, on_arm_motors_off_clicked)
+        self._base_motors = YoubotMotors("base", self.on_base_motors_on_clicked, self.on_base_motors_off_clicked)        
+        self._arm_motors = YoubotMotors("arm", self.on_arm_motors_on_clicked, self.on_arm_motors_off_clicked)
      
         self._ethercat = YoubotEthercat('EtherCAT', self.on_reconnect_clicked)
         self._batteries = [PR2Battery(self.context)]
