@@ -31,10 +31,10 @@
 # POSSIBILITY OF SUCH DAMAGE.
 from python_qt_binding.QtCore import QSize
 
-from rqt_robot_dashboard.widgets import IconToolButton
+from rqt_robot_dashboard.widgets import MenuDashWidget
 
 
-class YoubotEthercat(IconToolButton):
+class YoubotEthercat(MenuDashWidget):
     """
     Dashboard widget to display youbot EtherCAT state.
     """
