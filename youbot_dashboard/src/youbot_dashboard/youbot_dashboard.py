@@ -80,7 +80,7 @@ class YoubotDashboard(Dashboard):
     def get_widgets(self):
         return [[self._monitor, self._console, self._motors], self._breakers, [self._runstop], self._batteries]
 
-    def check_motor_state(self, button_handle, component_name, msg, data_index)
+    def check_motor_state(self, button_handle, component_name, msg, data_index):
         if (msg.power_board_state_valid and msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_ENABLED):
             self.button_handle.set_ok()
             self.button_handle.setToolTip(self.tr(component_name + " Motors: Switched ON"))
