@@ -78,7 +78,7 @@ class YoubotDashboard(Dashboard):
         self._dashboard_agg_sub = rospy.Subscriber('dashboard_agg', DashboardState, self.dashboard_callback)
 
     def get_widgets(self):
-        return [[self._monitor, self._console, self._motors], self._breakers, [self._runstop], self._batteries]
+        return [[self._monitor, self._console], [self._base_motors, self._arm_motors], [self._ethercat], self._batteries]
 
     def check_motor_state(self, button_handle, component_name, msg, data_index):
         if (msg.power_board_state_valid and msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_ENABLED):
