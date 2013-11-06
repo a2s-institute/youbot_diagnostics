@@ -81,15 +81,19 @@ class YoubotDashboard(Dashboard):
         return [[self._monitor, self._console], [self._base_motors, self._arm_motors], [self._ethercat], self._batteries]
 
     def check_motor_state(self, button_handle, component_name, msg, data_index):
-        if (msg.power_board_state_valid and msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_ENABLED):
-            button_handle.set_ok()
-            button_handle.setToolTip(self.tr(component_name + " Motors: Switched ON"))
-        elif (msg.power_board_state_valid and msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_STANDBY):
-            button_handle.set_warn()
-            button_handle.setToolTip(self.tr(component_name + " Motors: Switched OFF"))
-        elif (msg.power_board_state_valid and msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_DISABLED):
-            button_handle.set_error()
-            button_handle.setToolTip(self.tr(component_name + " Motors: not connected"))
+        if (msg.power_board_state_valid and not msg.power_board_state.run_stop):
+            if (msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_ENABLED):
+                button_handle.set_ok()
+                button_handle.setToolTip(self.tr(component_name + " Motors: Switched ON"))
+            elif (msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_STANDBY):
+                button_handle.set_warn()
+                button_handle.setToolTip(self.tr(component_name + " Motors: Switched OFF"))
+            elif (msg.power_board_state.circuit_state[data_index] == PowerBoardState.STATE_DISABLED):
+                button_handle.set_error()
+                button_handle.setToolTip(self.tr(component_name + " Motors: not connected"))
+            else:
+                button_handle.set_stale()
+                button_handle.setToolTip(self.tr(component_name + " Motors: stale"))
         else:
             button_handle.set_stale()
             button_handle.setToolTip(self.tr(component_name + " Motors: stale"))
