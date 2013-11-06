@@ -118,10 +118,10 @@ class YoubotDashboard(Dashboard):
         if (msg.power_board_state_valid):
             if not msg.power_board_state.run_stop:
                 self._ethercat.set_connected()
-                self._ethercat.setToolTip(self.tr("EtherCAT: connected"))
+                self._ethercat.setToolTip(self.tr("EtherCAT: connection established"))
             if not msg.power_board_state.wireless_stop:
                 self._ethercat.set_disconnected()
-                self._ethercat.setToolTip(self.tr("EtherCAT: disconnected"))
+                self._ethercat.setToolTip(self.tr("EtherCAT: connection lost"))
         else:
             self._ethercat.set_stale()
             self._ethercat.setToolTip(self.tr("EtherCAT: Stale"))
