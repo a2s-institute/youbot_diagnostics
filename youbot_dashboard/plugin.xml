@@ -1,5 +1,5 @@
 <library path="src">
-  <class name="oubotDashboard" type="youbot_dashboard.youbot_dashboard.YoubotDashboard" base_class_type="rqt_gui_py::Plugin">
+  <class name="YoubotDashboard" type="youbot_dashboard.youbot_dashboard.YoubotDashboard" base_class_type="rqt_gui_py::Plugin">
     <description>
       A Python GUI plugin for displaying a dashboard that displays and interacts with low level youBot states.
     </description>
