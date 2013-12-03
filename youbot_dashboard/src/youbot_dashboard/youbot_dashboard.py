@@ -70,7 +70,8 @@ class YoubotDashboard(Dashboard):
         self._console = ConsoleDashWidget(self.context, minimal=False)
         self._monitor = MonitorDashWidget(self.context)
         self._base_motors = YoubotMotors("base", self.on_base_motors_on_clicked, self.on_base_motors_off_clicked)        
-        self._arm_motors = YoubotMotors("arm", self.on_arm_motors_on_clicked, self.on_arm_motors_off_clicked)
+        self._arm_1_motors = YoubotMotors("arm", self.on_arm_1_motors_on_clicked, self.on_arm_1_motors_off_clicked)
+
      
         self._ethercat = YoubotEthercat('EtherCAT', self.on_reconnect_clicked)
         self._batteries = [PR2Battery(self.context)]
@@ -78,7 +79,7 @@ class YoubotDashboard(Dashboard):
         self._dashboard_agg_sub = rospy.Subscriber('dashboard_agg', DashboardState, self.dashboard_callback)
 
     def get_widgets(self):
-        return [[self._monitor, self._console], [self._base_motors, self._arm_motors], [self._ethercat], self._batteries]
+        return [[self._monitor, self._console], [self._base_motors, self._arm_1_motors], [self._ethercat], self._batteries]
 
     def check_motor_state(self, button_handle, component_name, msg, data_index):
         if (msg.power_board_state_valid and not msg.power_board_state.run_stop):
@@ -110,7 +111,7 @@ class YoubotDashboard(Dashboard):
 
         # base and arm motors
         self.check_motor_state(self._base_motors, "Base", msg, 0)
-        self.check_motor_state(self._arm_motors, "Arm", msg, 1)
+        self.check_motor_state(self._arm_1_motors, "Arm 1", msg, 1)
        
         # battery
         if (msg.power_state_valid):
@@ -169,11 +170,11 @@ class YoubotDashboard(Dashboard):
     def on_base_motors_off_clicked(self):
         self.on_motors_clicked(self._base_motors, "base", 0, "Off")
     
-    def on_arm_motors_on_clicked(self):
-        self.on_motors_clicked(self._arm_motors, "arm", 1, "On")
+    def on_arm_1_motors_on_clicked(self):
+        self.on_motors_clicked(self._arm_1_motors, "arm_1", 1, "On")
 
-    def on_arm_motors_off_clicked(self):
-        self.on_motors_clicked(self._arm_motors, "arm", 1, "Off")
+    def on_arm_1_motors_off_clicked(self):
+        self.on_motors_clicked(self._arm_1_motors, "arm_1", 1, "Off")
 
     def shutdown_dashboard(self):
         self._dashboard_agg_sub.unregister()
