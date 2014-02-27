@@ -32,6 +32,8 @@
 #define MIN_VOLTAGE     				18  // Volt
 #define MAX_VOLTAGE    					25  // Volt
 
+#define MIN_VOLTAGE_WARN_LEVEL	10.5  // Volt
+
 #define BATTERY_PERCENTAGE_THRESHOLD    30
 
 namespace youbot
