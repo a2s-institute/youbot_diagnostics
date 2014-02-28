@@ -29,8 +29,8 @@
 #include <cstdlib>
 
 
-#define MIN_VOLTAGE     				18  // Volt
-#define MAX_VOLTAGE    					25  // Volt
+#define MIN_VOLTAGE                     18.0  // Volt
+#define MAX_VOLTAGE                     25.0  // Volt
 
 #define MIN_VOLTAGE_WARN_LEVEL	10.5  // Volt
 
