@@ -129,9 +129,8 @@ void YoubotBatteryMonitor::publishStatusInformation(std::string lan_device_name,
 		diagnostic_state_.message = "overall battery level is below 10%% or the battery level of one cell is below the recommended voltage";
 
 		// call the beep command
-		ret = system("beep");
-		ret = system("beep");
-		ret = system("beep");
+    for(size_t i = 0; i < 10; i++)
+		  ret = system("beep");
 	}
 
 	if(bat_percentage <= 0)
