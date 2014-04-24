@@ -32,7 +32,7 @@
 #define MIN_VOLTAGE                     18.0  // Volt
 #define MAX_VOLTAGE                     25.0  // Volt
 
-#define MIN_VOLTAGE_WARN_LEVEL          10.0  // Volt
+#define MIN_VOLTAGE_WARN_LEVEL          10.2  // Volt
 
 #define BATTERY_PERCENTAGE_THRESHOLD    30
 

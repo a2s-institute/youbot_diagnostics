@@ -123,7 +123,7 @@ void YoubotBatteryMonitor::publishStatusInformation(std::string lan_device_name,
 	if(bat_percentage > 100)
 		bat_percentage = 100;
 
-	if((bat_percentage <= BATTERY_PERCENTAGE_THRESHOLD) or (bat1_voltage < MIN_VOLTAGE_WARN_LEVEL) or (bat2_voltage < MIN_VOLTAGE_WARN_LEVEL))
+	if((bat_percentage <= BATTERY_PERCENTAGE_THRESHOLD) or (bat1_voltage <= MIN_VOLTAGE_WARN_LEVEL) or (bat2_voltage <= MIN_VOLTAGE_WARN_LEVEL))
 	{
 		diagnostic_state_.level = diagnostic_msgs::DiagnosticStatus::WARN;
 		diagnostic_state_.message = "overall battery level is below 10%% or the battery level of one cell is below the recommended voltage";
