@@ -15,6 +15,7 @@ catkin_package(
 )
 
 include_directories(
+  ${catkin_INCLUDE_DIRS}
   include/youbot_battery_monitor
 )
 
