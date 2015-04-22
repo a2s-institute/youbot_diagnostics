@@ -1,1 +1,4 @@
 *.pyc
+/.autotools
+/.cproject
+/.project
