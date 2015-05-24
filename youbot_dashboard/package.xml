@@ -13,6 +13,7 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <run_depend>diagnostic_msgs</run_depend>
+  <run_depend>pr2_dashboard_aggregator</run_depend>
   <run_depend>pr2_msgs</run_depend>
   <run_depend>pr2_power_board</run_depend>
   <run_depend>roslib</run_depend>
