@@ -63,30 +63,30 @@ bool YoubotBatteryMonitor::connect(std::string port)
 
 void YoubotBatteryMonitor::configureSerialPort()
 {
-  struct termios port_settings; // structure to store the port settings in
+	struct termios port_settings; // structure to store the port settings in
 
-  tcgetattr(serial_file_description_, &port_settings);
+	tcgetattr(serial_file_description_, &port_settings);
 
-  cfsetispeed(&port_settings, B0); // set baud rates
-  cfsetospeed(&port_settings, B0);
+	cfsetispeed(&port_settings, B0); // set baud rates
+	cfsetospeed(&port_settings, B0);
 
-  port_settings.c_cflag |= (CLOCAL | CREAD); //Enable the receiver and set local mode...
+	port_settings.c_cflag |= (CLOCAL | CREAD); //Enable the receiver and set local mode...
 
-  //port_settings.c_cflag |= CRTSCTS; //Enable Hardware Flow Control
-  port_settings.c_cflag &= ~CRTSCTS; //Disable Hardware Flow Control
+	//port_settings.c_cflag |= CRTSCTS; //Enable Hardware Flow Control
+	port_settings.c_cflag &= ~CRTSCTS; //Disable Hardware Flow Control
 
-  port_settings.c_cflag &= ~PARENB; // set no parity, stop bits, data bits
-  port_settings.c_cflag &= ~CSTOPB;
-  port_settings.c_cflag &= ~CSIZE;
-  port_settings.c_cflag |= CS8;
+	port_settings.c_cflag &= ~PARENB; // set no parity, stop bits, data bits
+	port_settings.c_cflag &= ~CSTOPB;
+	port_settings.c_cflag &= ~CSIZE;
+	port_settings.c_cflag |= CS8;
 
-  port_settings.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG); //Choosing Raw Input
-  port_settings.c_iflag &= ~(IXON | IXOFF | IXANY); //disable software flow control
-  port_settings.c_oflag &= ~OPOST; //Choosing Raw Output
-  port_settings.c_cc[VMIN] = 0;
-  port_settings.c_cc[VTIME] = 10; /* set raw input, 1 second timeout */
+	port_settings.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG); //Choosing Raw Input
+	port_settings.c_iflag &= ~(IXON | IXOFF | IXANY); //disable software flow control
+	port_settings.c_oflag &= ~OPOST; //Choosing Raw Output
+	port_settings.c_cc[VMIN] = 0;
+	port_settings.c_cc[VTIME] = 10; /* set raw input, 1 second timeout */
 
-  tcsetattr(serial_file_description_, TCSANOW, &port_settings); // apply the settings to the port
+	tcsetattr(serial_file_description_, TCSANOW, &port_settings); // apply the settings to the port
 }
 
 bool YoubotBatteryMonitor::disconnect()
