@@ -102,8 +102,13 @@ void YoubotBatteryMonitor::publishStatusInformation(std::string lan_device_name,
 
 	// get and write IP addresses to the lcd display
 	this->getIPAddresses(lan_device_name, wlan_device_name, lan_ip, wlan_ip);
-	this->setYoubotDisplayText(line2, wlan_ip);
-	this->setYoubotDisplayText(line3, lan_ip);
+
+	if(toggle_display_text_)
+	    this->setYoubotDisplayText(line2, wlan_ip);
+	else
+	    this->setYoubotDisplayText(line2, lan_ip);
+
+	toggle_display_text_ = !toggle_display_text_;
 
 	// retrieve battery information
 	bat1_voltage = this->getVoltage(battery1);

@@ -77,6 +77,7 @@ private:
 
 	int serial_file_description_;
 	bool is_connected_;
+	bool toggle_display_text_;
 };
 
 } /* namespace youbot */
