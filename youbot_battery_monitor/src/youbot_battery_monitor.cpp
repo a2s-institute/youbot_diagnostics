@@ -10,14 +10,8 @@
 namespace youbot
 {
 
-YoubotBatteryMonitor::YoubotBatteryMonitor()
+YoubotBatteryMonitor::YoubotBatteryMonitor() : serial_file_description_(0), is_connected_(false), ros_node_initialized_(false), nh_(NULL), toggle_display_text_(false)
 {
-	serial_file_description_ = 0;
-	is_connected_ = false;
-
-	ros_node_initialized_ = false;
-	nh_ = NULL;
-
 	diagnostic_state_.name = "platform_youBot power supply";
 	diagnostic_state_.values.resize(5);
 }
