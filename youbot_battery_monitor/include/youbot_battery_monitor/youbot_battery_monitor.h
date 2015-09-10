@@ -45,38 +45,38 @@ enum VoltageSource { battery1 = 0x04, battery2 = 0x05, powersupply = 0x0c };
 class YoubotBatteryMonitor
 {
 public:
-	YoubotBatteryMonitor();
-	~YoubotBatteryMonitor();
+    YoubotBatteryMonitor();
+    ~YoubotBatteryMonitor();
 
-	bool connect(std::string port);
-	bool disconnect();
+    bool connect(std::string port);
+    bool disconnect();
 
-	/* returns the voltage in [Volt] */
-	double getVoltage(VoltageSource source);
+    /* returns the voltage in [Volt] */
+    double getVoltage(VoltageSource source);
 
-	/* set text on the youBot LCD display */
-	bool setYoubotDisplayText(DisplayLine line, std::string text);
+    /* set text on the youBot LCD display */
+    bool setYoubotDisplayText(DisplayLine line, std::string text);
 
-	/* returns the IP address for given device names */
-	void getIPAddresses(std::string lan_name, std::string wlan_name, std::string& lan_ip, std::string& wlan_ip);
+    /* returns the IP address for given device names */
+    void getIPAddresses(std::string lan_name, std::string wlan_name, std::string& lan_ip, std::string& wlan_ip);
 
-	void publishStatusInformation(std::string lan_device_name, std::string wlan_device_name);
+    void publishStatusInformation(std::string lan_device_name, std::string wlan_device_name);
 
 private:
-	void configureSerialPort();
+    void configureSerialPort();
 
-	bool ros_node_initialized_;
-	ros::NodeHandle* nh_;
+    bool ros_node_initialized_;
+    ros::NodeHandle* nh_;
 
-	ros::Publisher pub_dashboard_battery_status_;
-	ros::Publisher pub_diagnostics_;
+    ros::Publisher pub_dashboard_battery_status_;
+    ros::Publisher pub_diagnostics_;
 
-	pr2_msgs::PowerState dashboard_battery_message_;
-	diagnostic_msgs::DiagnosticArray diagnostic_array_;
-	diagnostic_msgs::DiagnosticStatus diagnostic_state_;
+    pr2_msgs::PowerState dashboard_battery_message_;
+    diagnostic_msgs::DiagnosticArray diagnostic_array_;
+    diagnostic_msgs::DiagnosticStatus diagnostic_state_;
 
-	int serial_file_description_;
-	bool is_connected_;
+    int serial_file_description_;
+    bool is_connected_;
 };
 
 } /* namespace youbot */
