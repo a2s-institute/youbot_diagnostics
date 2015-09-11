@@ -1,19 +1,19 @@
 /*
+ * Copyright [2012] <Bonn-Rhein-Sieg University>
+ *
  * youbot_battery_monitor.h
  *
  *  Created on: Nov 30, 2012
  *      Author: Frederik Hegger, Jan Paulus
  */
 
-#include "youbot_battery_monitor.h"
-
-using namespace youbot;
+#include <youbot_battery_monitor/youbot_battery_monitor.h>
 
 int main(int argc, char* argv[])
 {
     ros::init(argc, argv, "youbot_battery_monitor");
 
-    YoubotBatteryMonitor* yb_battery_monitor = new YoubotBatteryMonitor();
+    youbot::YoubotBatteryMonitor* yb_battery_monitor = new youbot::YoubotBatteryMonitor();
 
     if (argc != 4)
     {
@@ -22,13 +22,11 @@ int main(int argc, char* argv[])
     }
 
     // if connecting fails, retry every 2 seconds
-    do
+    std::cout << "try to connect to serial port: " << argv[1] << std::endl;
+    while (!yb_battery_monitor->connect(argv[1]))
     {
-        std::cout << "try to connect to serial port: " << argv[1] << std::endl;
         sleep(2);
     }
-    while (!yb_battery_monitor->connect(argv[1]));
-
 
     while (true)
     {

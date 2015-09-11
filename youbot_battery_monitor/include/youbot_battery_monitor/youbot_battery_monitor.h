@@ -1,25 +1,27 @@
 /*
+ * Copyright [2012] <Bonn-Rhein-Sieg University>
+ *
  * youbot_battery_monitor.h
  *
  *  Created on: Nov 30, 2012
  *      Author: Frederik Hegger, Jan Paulus
  */
 
-#ifndef YOUBOT_BATTERY_MONITOR_H_
-#define YOUBOT_BATTERY_MONITOR_H_
+#ifndef YOUBOT_BATTERY_MONITOR_YOUBOT_BATTERY_MONITOR_H_
+#define YOUBOT_BATTERY_MONITOR_YOUBOT_BATTERY_MONITOR_H_
 
 #include <ros/ros.h>
 #include <pr2_msgs/PowerState.h>
 #include <diagnostic_msgs/DiagnosticStatus.h>
 #include <diagnostic_msgs/DiagnosticArray.h>
 
-#include <stdio.h> // standard input / output functions
-#include <string.h> // string function definitions
-#include <unistd.h> // UNIX standard function definitions
-#include <fcntl.h> // File control definitions
-#include <errno.h> // Error number definitions
-#include <termios.h> // POSIX terminal control definitionss
-#include <time.h>   // time calls
+#include <stdio.h>    // standard input / output functions
+#include <string.h>   // string function definitions
+#include <unistd.h>   // UNIX standard function definitions
+#include <fcntl.h>    // File control definitions
+#include <errno.h>    // Error number definitions
+#include <termios.h>  // POSIX terminal control definitionss
+#include <time.h>     // time calls
 #include <iostream>
 #include <string>
 #include <sys/types.h>
@@ -80,4 +82,4 @@ private:
 };
 
 } /* namespace youbot */
-#endif /* YOUBOT_BATTERY_MONITOR_H_ */
+#endif  // YOUBOT_BATTERY_MONITOR_YOUBOT_BATTERY_MONITOR_H_

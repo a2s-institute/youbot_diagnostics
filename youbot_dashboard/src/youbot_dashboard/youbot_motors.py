@@ -46,8 +46,8 @@ class YoubotMotors(MenuDashWidget):
         stale_icon = ['bg-grey.svg', 'ic-' + component_name + '.svg', 'ol-stale-badge.svg']
 
         icons = [ok_icon, warn_icon, err_icon, stale_icon]
-        super(YoubotMotors, self).__init__(name=component_name + ' motors', icons=icons, icon_paths=[['youbot_dashboard', 'images']])
-
+        super(YoubotMotors, self).__init__(name=component_name + ' motors', icons=icons,
+                                           icon_paths=[['youbot_dashboard', 'images']])
 
         self.update_state(3)
 

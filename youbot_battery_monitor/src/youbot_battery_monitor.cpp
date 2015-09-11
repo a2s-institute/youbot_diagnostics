@@ -1,11 +1,14 @@
 /*
+ * Copyright [2012] <Bonn-Rhein-Sieg University>
+ *
  * youbot_battery_monitor.cpp
  *
  *  Created on: Nov 30, 2012
  *      Author: Frederik Hegger, Jan Paulus
  */
 
-#include "youbot_battery_monitor.h"
+#include <youbot_battery_monitor/youbot_battery_monitor.h>
+#include <string>
 
 namespace youbot
 {
@@ -63,30 +66,30 @@ bool YoubotBatteryMonitor::connect(std::string port)
 
 void YoubotBatteryMonitor::configureSerialPort()
 {
-    struct termios port_settings; // structure to store the port settings in
+    struct termios port_settings;  // structure to store the port settings in
 
     tcgetattr(serial_file_description_, &port_settings);
 
-    cfsetispeed(&port_settings, B0); // set baud rates
+    cfsetispeed(&port_settings, B0);  // set baud rates
     cfsetospeed(&port_settings, B0);
 
-    port_settings.c_cflag |= (CLOCAL | CREAD); //Enable the receiver and set local mode...
+    port_settings.c_cflag |= (CLOCAL | CREAD);  // Enable the receiver and set local mode...
 
-    //port_settings.c_cflag |= CRTSCTS; //Enable Hardware Flow Control
-    port_settings.c_cflag &= ~CRTSCTS; //Disable Hardware Flow Control
+    // port_settings.c_cflag |= CRTSCTS;  // Enable Hardware Flow Control
+    port_settings.c_cflag &= ~CRTSCTS;  // Disable Hardware Flow Control
 
-    port_settings.c_cflag &= ~PARENB; // set no parity, stop bits, data bits
+    port_settings.c_cflag &= ~PARENB;  // set no parity, stop bits, data bits
     port_settings.c_cflag &= ~CSTOPB;
     port_settings.c_cflag &= ~CSIZE;
     port_settings.c_cflag |= CS8;
 
-    port_settings.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG); //Choosing Raw Input
-    port_settings.c_iflag &= ~(IXON | IXOFF | IXANY); //disable software flow control
-    port_settings.c_oflag &= ~OPOST; //Choosing Raw Output
+    port_settings.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);  // Choosing Raw Input
+    port_settings.c_iflag &= ~(IXON | IXOFF | IXANY);  // disable software flow control
+    port_settings.c_oflag &= ~OPOST;  // Choosing Raw Output
     port_settings.c_cc[VMIN] = 0;
-    port_settings.c_cc[VTIME] = 10; /* set raw input, 1 second timeout */
+    port_settings.c_cc[VTIME] = 10;  // set raw input, 1 second timeout
 
-    tcsetattr(serial_file_description_, TCSANOW, &port_settings); // apply the settings to the port
+    tcsetattr(serial_file_description_, TCSANOW, &port_settings);  // apply the settings to the port
 }
 
 bool YoubotBatteryMonitor::disconnect()
@@ -123,10 +126,12 @@ void YoubotBatteryMonitor::publishStatusInformation(std::string lan_device_name,
     if (bat_percentage > 100)
         bat_percentage = 100;
 
-    if ((bat_percentage <= BATTERY_PERCENTAGE_THRESHOLD) or(bat1_voltage <= MIN_VOLTAGE_WARN_LEVEL) or(bat2_voltage <= MIN_VOLTAGE_WARN_LEVEL))
+    if ((bat_percentage <= BATTERY_PERCENTAGE_THRESHOLD) || (bat1_voltage <= MIN_VOLTAGE_WARN_LEVEL) || (bat2_voltage <=
+        MIN_VOLTAGE_WARN_LEVEL))
     {
         diagnostic_state_.level = diagnostic_msgs::DiagnosticStatus::WARN;
-        diagnostic_state_.message = "overall battery level is below 10%% or the battery level of one cell is below the recommended voltage";
+        diagnostic_state_.message = "overall battery level is below 10%% or the battery level of one cell is below "
+                                    "the recommended voltage";
 
         // call the beep command
         for (size_t i = 0; i < 10; i++)
@@ -218,9 +223,9 @@ bool YoubotBatteryMonitor::setYoubotDisplayText(DisplayLine line, std::string te
         else
             send_bytes[i + 1] = ' ';
     }
-    send_bytes[size - 1] = 0x0d; //trailing \CR
+    send_bytes[size - 1] = 0x0d;  //  trailing \CR
 
-    ret = write(serial_file_description_, send_bytes, size); //Send data
+    ret = write(serial_file_description_, send_bytes, size);  //  Send data
     printf("[");
     for (int i = 1; i < size - 1; i++)
         printf("%c", send_bytes[i]);
@@ -230,29 +235,30 @@ bool YoubotBatteryMonitor::setYoubotDisplayText(DisplayLine line, std::string te
     return true;
 }
 
-//return the voltage in [Volt]
+// return the voltage in [Volt]
 double YoubotBatteryMonitor::getVoltage(VoltageSource source)
 {
     unsigned char send_bytes[1];
     send_bytes[0] = source;
     int ret = 0;
 
-    ret = write(serial_file_description_, send_bytes, 1); // Send data
+    ret = write(serial_file_description_, send_bytes, 1);  // Send data
 
     const int readsize = 20;
     char read_bytes[readsize] = { 0 };
 
     int nobytesread = 0;
     nobytesread = read(serial_file_description_, read_bytes, readsize);
-    read_bytes[nobytesread - 1] = 0; // delete the last tow character \CR+\LF
+    read_bytes[nobytesread - 1] = 0;  // delete the last tow character \CR+\LF
     read_bytes[nobytesread - 2] = 0;
 
     std::string value(read_bytes);
 
-    return (double) atoi(value.c_str()) / 1000;
+    return static_cast<double>(atoi(value.c_str()) / 1000);
 }
 
-void YoubotBatteryMonitor::getIPAddresses(std::string lan_name, std::string wlan_name, std::string& lan_ip, std::string& wlan_ip)
+void YoubotBatteryMonitor::getIPAddresses(std::string lan_name, std::string wlan_name, std::string& lan_ip,
+                                          std::string& wlan_ip)
 {
     struct ifaddrs * ifAddrStruct = NULL;
     struct ifaddrs * ifa = NULL;
@@ -270,7 +276,7 @@ void YoubotBatteryMonitor::getIPAddresses(std::string lan_name, std::string wlan
             tmpAddrPtr = &((struct sockaddr_in *) ifa->ifa_addr)->sin_addr;
             char addressBuffer[INET_ADDRSTRLEN];
             inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
-            //  printf("%s IP Address %s\n", ifa->ifa_name, addressBuffer);
+            // printf("%s IP Address %s\n", ifa->ifa_name, addressBuffer);
             std::string interface(ifa->ifa_name);
             if (interface == lan_name)
                 lan_ip.append(addressBuffer);
