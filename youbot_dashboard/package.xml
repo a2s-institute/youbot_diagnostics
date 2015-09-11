@@ -24,6 +24,8 @@
   <run_depend>rqt_robot_dashboard</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>std_srvs</run_depend>
+  
+  <test_depend>roslaunch</test_depend>
 
   <export>
     <rqt_gui plugin="${prefix}/plugin.xml"/>

@@ -13,5 +13,7 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <run_depend>diagnostic_aggregator</run_depend>
+  
+  <test_depend>roslaunch</test_depend>
 
 </package>
