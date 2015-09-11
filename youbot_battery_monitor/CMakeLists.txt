@@ -6,6 +6,7 @@ find_package(catkin REQUIRED
     diagnostic_msgs
     pr2_msgs
     roscpp
+    roslint
 )
 
 catkin_package(
@@ -19,6 +20,8 @@ include_directories(
   include/youbot_battery_monitor
 )
 
+
+### EXECUTABLES
 add_executable(youbot_battery_monitor
   src/youbot_battery_monitor_node.cpp
   src/youbot_battery_monitor.cpp 
@@ -29,6 +32,12 @@ target_link_libraries(youbot_battery_monitor
   stdc++
 )
 
+
+### TESTS
+roslint_cpp()
+
+
+### INSTALLS
 install(TARGETS youbot_battery_monitor
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

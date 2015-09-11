@@ -1,11 +1,17 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(youbot_dashboard)
-find_package(catkin REQUIRED)
+
+find_package(catkin REQUIRED
+  COMPONENTS
+    roslint
+)
 
 catkin_package()
 catkin_python_setup()
 
 ### TESTS
+roslint_python()
+
 if(CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
 
