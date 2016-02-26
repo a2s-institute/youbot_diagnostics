@@ -31,7 +31,6 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import roslib
-roslib.load_manifest('youbot_dashboard')
 import rospy
 
 from pr2_msgs.msg import PowerBoardState, DashboardState
@@ -47,6 +46,8 @@ from python_qt_binding.QtGui import QMessageBox
 from rqt_pr2_dashboard.pr2_battery import PR2Battery
 from .youbot_motors import YoubotMotors
 from .youbot_ethercat import YoubotEthercat
+
+roslib.load_manifest('youbot_dashboard')
 
 
 class YoubotDashboard(Dashboard):
