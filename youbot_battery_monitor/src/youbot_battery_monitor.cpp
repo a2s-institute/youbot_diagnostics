@@ -123,6 +123,8 @@ void YoubotBatteryMonitor::publishStatusInformation(std::string lan_device_name,
     diagnostic_state_.level = diagnostic_msgs::DiagnosticStatus::OK;
     diagnostic_state_.message = "power supply is ok";
 
+    dashboard_battery_message_.AC_present = ext_power_voltage > MIN_VOLTAGE ? 1 : 0;
+
     if (bat_percentage > 100)
         bat_percentage = 100;
 
@@ -133,9 +135,12 @@ void YoubotBatteryMonitor::publishStatusInformation(std::string lan_device_name,
         diagnostic_state_.message = "overall battery level is below 10%% or the battery level of one cell is below "
                                     "the recommended voltage";
 
-        // call the beep command
-        for (size_t i = 0; i < 10; i++)
-            ret = system("beep");
+        if (dashboard_battery_message_.AC_present == 0)
+        {
+            // call the beep command
+            for (size_t i = 0; i < 10; i++)
+                ret = system("beep");
+        }
     }
 
     if (bat_percentage <= 0)
@@ -148,12 +153,10 @@ void YoubotBatteryMonitor::publishStatusInformation(std::string lan_device_name,
 
     // dashboard msg
     dashboard_battery_message_.relative_capacity = bat_percentage;
-    dashboard_battery_message_.AC_present = ext_power_voltage > MIN_VOLTAGE ? 1 : 0;
-
 
     // diagnostics msg
     diagnostic_state_.values[0].key = "external power connected";
-    diagnostic_state_.values[0].value = ext_power_voltage > MIN_VOLTAGE ? "yes" : "no";
+    diagnostic_state_.values[0].value = dashboard_battery_message_.AC_present ? "yes" : "no";
     diagnostic_state_.values[1].key = "external power voltage";
     diagnostic_state_.values[1].value = boost::lexical_cast<std::string>(ext_power_voltage);
     diagnostic_state_.values[2].key = "battery percentage";
