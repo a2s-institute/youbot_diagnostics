@@ -48,6 +48,6 @@ install(DIRECTORY include/${PROJECT_NAME}/
   FILES_MATCHING PATTERN "*.h"
 )
 
-install(FILES youbot_battery_monitor.sh
+install(PROGRAMS youbot_battery_monitor.sh
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
