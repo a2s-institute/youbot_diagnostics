@@ -138,7 +138,7 @@ class YoubotDashboard(Dashboard):
 
             try:
                 reconnect()
-            except rospy.ServiceException, e:
+            except rospy.ServiceException as e:
                 QMessageBox.critical(self.ethercat,
                                      "Error", "Failed to reconnect the driver: service call failed with error: %s" %
                                      (e))
@@ -160,7 +160,7 @@ class YoubotDashboard(Dashboard):
 
                 try:
                     switch_motor_state()
-                except rospy.ServiceException, e:
+                except rospy.ServiceException as e:
                     QMessageBox.critical(button_handle, "Error", "Failed to switch " + mode_name + " " +
                                          component_name + " motors: service call failed with error: %s" % (e))
 
